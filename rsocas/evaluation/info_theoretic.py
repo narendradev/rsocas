@@ -72,8 +72,23 @@ class InformationTheoreticEval:
         if internal_ratios:
             score = sum(internal_ratios) / len(internal_ratios)
         else:
-            # No internal nodes (all leaves or empty)
-            score = 1.0
+            # No internal nodes — evaluate leaf response density instead.
+            # A good leaf response should be informationally dense relative
+            # to its input (high compression ratio = more unique content).
+            leaf_scores = []
+            for lt in trace.leaf_traces:
+                if lt.response and lt.prompt:
+                    resp_ratio = _compression_ratio(lt.response)
+                    prompt_ratio = _compression_ratio(lt.prompt)
+                    # Good: response has high info density relative to prompt
+                    # Bad: response is very short/empty or just echoes prompt
+                    density = min(1.0, resp_ratio / max(prompt_ratio, 0.01))
+                    # Also penalize very short responses relative to prompt
+                    length_ratio = min(1.0, len(lt.response) / max(len(lt.prompt) * 0.01, 1))
+                    leaf_score = density * 0.7 + length_ratio * 0.3
+                    leaf_scores.append(leaf_score)
+                    per_node_scores[lt.node_id] = leaf_score
+            score = sum(leaf_scores) / len(leaf_scores) if leaf_scores else 1.0
 
         score = max(0.0, min(1.0, score))
 

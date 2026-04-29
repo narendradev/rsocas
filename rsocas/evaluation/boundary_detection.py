@@ -75,15 +75,30 @@ class BoundaryDetectionEval:
             per_node_scores[node.id] = max(0.0, min(1.0, 1.0 - echo_ratio))
             max_echo_ratio = max(max_echo_ratio, echo_ratio)
 
-        score = max(0.0, min(1.0, 1.0 - max_echo_ratio))
+        if internal_count > 0:
+            score = max(0.0, min(1.0, 1.0 - max_echo_ratio))
+        else:
+            # No internal nodes — evaluate leaf response vs prompt similarity.
+            # A good response should NOT echo the prompt verbatim.
+            # It should synthesize/answer, not parrot.
+            leaf_scores = []
+            for lt in trace.leaf_traces:
+                if lt.response and lt.prompt:
+                    echo = self._similarity_fn(lt.response, lt.prompt)
+                    leaf_score = max(0.0, min(1.0, 1.0 - echo))
+                    leaf_scores.append(leaf_score)
+                    per_node_scores[lt.node_id] = leaf_score
+            score = sum(leaf_scores) / len(leaf_scores) if leaf_scores else 1.0
+            max_echo_ratio = 1.0 - score
 
         return EvalResult(
             score=score,
-            confidence=0.85,
+            confidence=0.85 if internal_count > 0 else 0.7,
             signal_type=self.signal_type,
             per_node_scores=per_node_scores,
             explanation=(
-                f"Boundary detection across {internal_count} internal node(s). "
+                f"Boundary detection across {internal_count} internal node(s), "
+                f"{len(trace.leaf_traces)} leaf(s). "
                 f"Max echo ratio={max_echo_ratio:.3f}, score={score:.3f}."
             ),
         )
