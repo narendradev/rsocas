@@ -6,6 +6,7 @@ feedback frequency.
 """
 
 from rsocas.breathing.annealing import AnnealingSchedule, AnnealingState
+from rsocas.breathing.breathing_crystallizer import BreathingCrystallizer, BreathingEvent
 from rsocas.breathing.feedback_anchor import FeedbackAnchor
 from rsocas.breathing.interference import InterferencePattern
 from rsocas.breathing.tempo import PIDTempoController, TempoState
@@ -13,6 +14,8 @@ from rsocas.breathing.tempo import PIDTempoController, TempoState
 __all__ = [
     "AnnealingSchedule",
     "AnnealingState",
+    "BreathingCrystallizer",
+    "BreathingEvent",
     "FeedbackAnchor",
     "InterferencePattern",
     "PIDTempoController",
