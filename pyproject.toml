@@ -17,6 +17,13 @@ dev = [
 ]
 gepa = ["gepa"]
 dspy = ["dspy>=2.5"]
+observability = [
+    "opentelemetry-api>=1.25",
+    "opentelemetry-sdk>=1.25",
+    "opentelemetry-exporter-otlp>=1.25",
+    "mlflow>=2.14",
+    "prometheus-client>=0.20",
+]
 
 [build-system]
 requires = ["setuptools>=68"]
