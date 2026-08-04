@@ -1,0 +1,311 @@
+{
+  "spearman_rho": -0.4213,
+  "spearman_p": 0.172608,
+  "precision_at_5": 0.6,
+  "precision_at_10": 0.7,
+  "n_samples": 12,
+  "n_failures": 9,
+  "per_evaluator": {
+    "information_theoretic": -0.8937,
+    "boundary": -0.6686,
+    "goodhart_resistant": -0.2473
+  },
+  "gate_passed": false,
+  "primary_label": "retrieval",
+  "analysis_by_label": {
+    "set_f1": {
+      "label": "set_f1",
+      "n": 12,
+      "spearman_rho": -0.1831,
+      "spearman_p": 0.56894,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "n_failures": 12,
+      "per_evaluator": {
+        "information_theoretic": -0.4938,
+        "boundary": -0.4919,
+        "goodhart_resistant": -0.0292
+      }
+    },
+    "retrieval": {
+      "label": "retrieval",
+      "n": 12,
+      "spearman_rho": -0.4213,
+      "spearman_p": 0.172608,
+      "precision_at_5": 0.6,
+      "precision_at_10": 0.7,
+      "n_failures": 9,
+      "per_evaluator": {
+        "information_theoretic": -0.8937,
+        "boundary": -0.6686,
+        "goodhart_resistant": -0.2473
+      }
+    }
+  },
+  "samples": [
+    {
+      "idx": 0,
+      "shifted": false,
+      "shift_type": "none",
+      "f1": 0.2442244224422442,
+      "needle_recall": 0.875,
+      "item_recall": 1.0,
+      "retrieval": 0.875,
+      "disagreement": 0.945637949836423,
+      "eval_scores": {
+        "information_theoretic": 0.004362050163576881,
+        "boundary": 0.95,
+        "goodhart_resistant": 0.47058823529411764
+      },
+      "latency": 141.94701957702637,
+      "k_star": 20,
+      "depth": 1,
+      "task_type": "qa",
+      "prediction": "- **January\u202f31\u202f2018** \u2013 A citizen of India expressed intent to meet or negotiate with a healthcare facility within the country.  \n- **February\u202f20\u202f2018** \u2013 An Indian citizen levied accusations against a healthcare facility in India.  \n- **February\u202f21\u202f2018** \u2013 A citizen of India rejected a healthcare facility in India.  \n- **February\u202f21\u202f2018** \u2013 A citizen of India lodged an official complaint regarding a healthcare facility in the nation.  \n- **May\u202f1\u202f2018** \u2013 An Indian citizen criticized or denounced a healthcare facility in India.  \n- **May\u202f8\u202f2018** \u2013 A citizen of India held a demonstration or rally at a healthcare facility in India.  \n- **July\u202f4\u202f2018** \u2013 A citizen of India opted to reduce or cease providing material aid to a healthcare facility within India.  \n- **June\u202f16\u202f2018** \u2013 A citizen of India committed a sexual assault at a healthcare facility in India (the facility witnessed the assault).",
+      "gold": "The actions taken by a citizen of India against a healthcare facility from 2018 onwards are as follows:\n\n- On January 31, 2018, a citizen of India expressed intent to meet or negotiate with a healthcare facility in India.\n- On February 20, 2018, a citizen of India accused a healthcare facility in India.\n- On February 21, 2018, a citizen of India officially complained about a healthcare facility in India.\n- On March 2, 2018, a citizen of India rejected a healthcare facility in India.\n- On May 1, 2018, a citizen of India criticized or denounced a healthcare facility in India.\n- On May 8, 2018, a citizen of India demonstrated or rallied at a healthcare facility in India.\n- On June 16, 2018, a Citizen of India sexually assaulted another individual at a Healthcare Facility in India.\n- On July 4, 2018, a citizen of India decided to reduce or stop providing material aid to a healthcare facility in India.",
+      "error": null
+    },
+    {
+      "idx": 1,
+      "shifted": true,
+      "shift_type": "needle_position",
+      "f1": 0.12941176470588237,
+      "needle_recall": 0.125,
+      "item_recall": 0.625,
+      "retrieval": 0.125,
+      "disagreement": 0.8846153846153846,
+      "eval_scores": {
+        "information_theoretic": 0.11538461538461539,
+        "boundary": 1.0,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 68.06014704704285,
+      "k_star": 20,
+      "depth": 1,
+      "task_type": "qa",
+      "prediction": "- On February\u202f20,\u202f2018, an Indian citizen levied accusations against a healthcare facility in India.",
+      "gold": "The actions taken by a citizen of India against a healthcare facility from 2018 onwards are as follows:\n\n- On January 31, 2018, a citizen of India expressed intent to meet or negotiate with a healthcare facility in India.\n- On February 20, 2018, a citizen of India accused a healthcare facility in India.\n- On February 21, 2018, a citizen of India officially complained about a healthcare facility in India.\n- On March 2, 2018, a citizen of India rejected a healthcare facility in India.\n- On May 1, 2018, a citizen of India criticized or denounced a healthcare facility in India.\n- On May 8, 2018, a citizen of India demonstrated or rallied at a healthcare facility in India.\n- On June 16, 2018, a Citizen of India sexually assaulted another individual at a Healthcare Facility in India.\n- On July 4, 2018, a citizen of India decided to reduce or stop providing material aid to a healthcare facility in India.",
+      "error": null
+    },
+    {
+      "idx": 2,
+      "shifted": true,
+      "shift_type": "distractors",
+      "f1": 0.24054982817869414,
+      "needle_recall": 0.875,
+      "item_recall": 1.0,
+      "retrieval": 0.875,
+      "disagreement": 0.9447803392779469,
+      "eval_scores": {
+        "information_theoretic": 0.005219660722053067,
+        "boundary": 0.95,
+        "goodhart_resistant": 0.47058823529411764
+      },
+      "latency": 141.3346107006073,
+      "k_star": 20,
+      "depth": 1,
+      "task_type": "qa",
+      "prediction": "- January\u202f31,\u202f2018 \u2013 An Indian citizen expressed intent to meet or negotiate with a healthcare facility in India.  \n- February\u202f20,\u202f2018 \u2013 An Indian citizen levied accusations against a healthcare facility in India.  \n- February\u202f21,\u202f2018 \u2013 An Indian citizen rejected a healthcare facility in India.  \n- February\u202f21,\u202f2018 \u2013 An Indian citizen lodged an official complaint regarding a healthcare facility in India.  \n- May\u202f1,\u202f2018 \u2013 An Indian citizen criticized or denounced a healthcare facility in India.  \n- May\u202f8,\u202f2018 \u2013 An Indian citizen participated in a demonstration or rally at a healthcare facility in India.  \n- July\u202f4,\u202f2018 \u2013 An Indian citizen opted to reduce or cease providing material aid to a healthcare facility in India.  \n- June\u202f16,\u202f2018 \u2013 An Indian citizen committed a sexual assault at a healthcare facility in India.",
+      "gold": "The actions taken by a citizen of India against a healthcare facility from 2018 onwards are as follows:\n\n- On January 31, 2018, a citizen of India expressed intent to meet or negotiate with a healthcare facility in India.\n- On February 20, 2018, a citizen of India accused a healthcare facility in India.\n- On February 21, 2018, a citizen of India officially complained about a healthcare facility in India.\n- On March 2, 2018, a citizen of India rejected a healthcare facility in India.\n- On May 1, 2018, a citizen of India criticized or denounced a healthcare facility in India.\n- On May 8, 2018, a citizen of India demonstrated or rallied at a healthcare facility in India.\n- On June 16, 2018, a Citizen of India sexually assaulted another individual at a Healthcare Facility in India.\n- On July 4, 2018, a citizen of India decided to reduce or stop providing material aid to a healthcare facility in India.",
+      "error": null
+    },
+    {
+      "idx": 1,
+      "shifted": false,
+      "shift_type": "none",
+      "f1": 0.2613065326633166,
+      "needle_recall": 0.2857142857142857,
+      "item_recall": 0.7142857142857143,
+      "retrieval": 0.2857142857142857,
+      "disagreement": 0.9240506329113924,
+      "eval_scores": {
+        "information_theoretic": 0.0759493670886076,
+        "boundary": 1.0,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 63.981842279434204,
+      "k_star": 20,
+      "depth": 1,
+      "task_type": "qa",
+      "prediction": "- On\u202f5\u202fJanuary\u202f2018, Narendra Modi, the Head of Government of India, expressed his intent to meet or negotiate with another entity.  \n- On\u202f19\u202fMay\u202f2018, Narendra Modi, as the Head of Government of India, provided economic aid.",
+      "gold": "The significant actions or events involving Narendra Modi, the Head of Government of India, in 2018 are as follows:\n\n- On January 5, 2018, Narendra Modi, who is the Head of Government (India), expressed intent to meet or negotiate with another entity.\n- On February 5, 2018, Narendra Modi, who was the Head of Government in India, was accused of crime and corruption.\n- On April 2, 2018, Narendra Modi, who is the Head of Government in India, praised or endorsed someone or something.\n- On May 13, 2018, Narendra Modi, as the Head of Government of India, did not criticize or denounce anyone, since the provided relationship attribute lacks a specified target.\n- On May 19, 2018, Narendra Modi, who is the Head of Government of India, provided economic aid.\n- On May 30, 2018, Narendra Modi, who is the Head of Government in India, made a statement.\n- On September 5, 2018, Narendra Modi, as the Head of Government of India, engaged in a symbolic act.",
+      "error": null
+    },
+    {
+      "idx": 101,
+      "shifted": true,
+      "shift_type": "needle_position",
+      "f1": 0.19704433497536947,
+      "needle_recall": 0.2857142857142857,
+      "item_recall": 0.42857142857142855,
+      "retrieval": 0.2857142857142857,
+      "disagreement": 0.96875,
+      "eval_scores": {
+        "information_theoretic": 0.06521739130434782,
+        "boundary": 0.96875,
+        "goodhart_resistant": 0.0
+      },
+      "latency": 70.57143878936768,
+      "k_star": 20,
+      "depth": 1,
+      "task_type": "qa",
+      "prediction": "- **30\u202fMay\u202f2018:** Narendra\u202fModi, the Head of Government of India, made a statement.  \n- **13\u202fMay\u202f2018:** There was no criticism or denunciation from Narendra\u202fModi (the Head of Government of India) because no specified target was mentioned in the related attribute.",
+      "gold": "The significant actions or events involving Narendra Modi, the Head of Government of India, in 2018 are as follows:\n\n- On January 5, 2018, Narendra Modi, who is the Head of Government (India), expressed intent to meet or negotiate with another entity.\n- On February 5, 2018, Narendra Modi, who was the Head of Government in India, was accused of crime and corruption.\n- On April 2, 2018, Narendra Modi, who is the Head of Government in India, praised or endorsed someone or something.\n- On May 13, 2018, Narendra Modi, as the Head of Government of India, did not criticize or denounce anyone, since the provided relationship attribute lacks a specified target.\n- On May 19, 2018, Narendra Modi, who is the Head of Government of India, provided economic aid.\n- On May 30, 2018, Narendra Modi, who is the Head of Government in India, made a statement.\n- On September 5, 2018, Narendra Modi, as the Head of Government of India, engaged in a symbolic act.",
+      "error": null
+    },
+    {
+      "idx": 102,
+      "shifted": true,
+      "shift_type": "distractors",
+      "f1": 0.24242424242424243,
+      "needle_recall": 0.2857142857142857,
+      "item_recall": 0.7142857142857143,
+      "retrieval": 0.2857142857142857,
+      "disagreement": 0.9215686274509804,
+      "eval_scores": {
+        "information_theoretic": 0.0784313725490196,
+        "boundary": 1.0,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 66.3879644870758,
+      "k_star": 20,
+      "depth": 1,
+      "task_type": "qa",
+      "prediction": "- 5\u202fJanuary\u202f2018 \u2013 Narendra Modi, as Head of Government of India, expressed his intent to meet or negotiate with another entity.  \n- 19\u202fMay\u202f2018 \u2013 Narendra Modi, as Head of Government of India, provided economic aid.",
+      "gold": "The significant actions or events involving Narendra Modi, the Head of Government of India, in 2018 are as follows:\n\n- On January 5, 2018, Narendra Modi, who is the Head of Government (India), expressed intent to meet or negotiate with another entity.\n- On February 5, 2018, Narendra Modi, who was the Head of Government in India, was accused of crime and corruption.\n- On April 2, 2018, Narendra Modi, who is the Head of Government in India, praised or endorsed someone or something.\n- On May 13, 2018, Narendra Modi, as the Head of Government of India, did not criticize or denounce anyone, since the provided relationship attribute lacks a specified target.\n- On May 19, 2018, Narendra Modi, who is the Head of Government of India, provided economic aid.\n- On May 30, 2018, Narendra Modi, who is the Head of Government in India, made a statement.\n- On September 5, 2018, Narendra Modi, as the Head of Government of India, engaged in a symbolic act.",
+      "error": null
+    },
+    {
+      "idx": 2,
+      "shifted": false,
+      "shift_type": "none",
+      "f1": 0.1910112359550562,
+      "needle_recall": 0.16666666666666666,
+      "item_recall": 0.16666666666666666,
+      "retrieval": 0.16666666666666666,
+      "disagreement": 1.0,
+      "eval_scores": {
+        "information_theoretic": 0.07142857142857142,
+        "boundary": 1.0,
+        "goodhart_resistant": 0.0
+      },
+      "latency": 67.28905463218689,
+      "k_star": 20,
+      "depth": 1,
+      "task_type": "qa",
+      "prediction": "- Brazil consulted with the Military of Brazil on\u202fAugust\u202f3,\u202f2011. (No other interactions between the Head of Government of Brazil and the Military of Brazil are mentioned in the provided context for the period 2005\u20112015.)",
+      "gold": "During the period from 2005 to 2015, the significant interactions between the Head of Government of Brazil and the Military of Brazil included the following:\n\n- On April 19, 2005, the Head of Government of Brazil praised or endorsed the Military of Brazil.\n- On April 2, 2006, the Head of Government in Brazil demanded something from the Military in Brazil.\n- On February 20, 2010, the Head of Government of Brazil was arrested, detained, or charged with legal action by the Brazilian military.\n- On August 3, 2011, the Head of Government of Brazil consulted with the Military of Brazil.\n- On November 27, 2012, the Head of Government of Brazil expressed intent to engage in diplomatic cooperation, such as policy support, with the Military of Brazil.\n- On July 24, 2015, the Head of Government in Brazil ordered the military to expel or deport certain individuals.",
+      "error": null
+    },
+    {
+      "idx": 201,
+      "shifted": true,
+      "shift_type": "needle_position",
+      "f1": 0.24324324324324323,
+      "needle_recall": 0.3333333333333333,
+      "item_recall": 0.5,
+      "retrieval": 0.3333333333333333,
+      "disagreement": 0.932198608237728,
+      "eval_scores": {
+        "information_theoretic": 0.029339853300733496,
+        "boundary": 0.9615384615384616,
+        "goodhart_resistant": 0.5
+      },
+      "latency": 85.78538823127747,
+      "k_star": 20,
+      "depth": 1,
+      "task_type": "qa",
+      "prediction": "From 2005 to 2015, the provided context mentions two specific interactions between the Head of Government of Brazil and the Military of Brazil:\n\n- **August\u202f3,\u202f2011** \u2013 Brazil consulted with the Military of Brazil.  \n- **November\u202f27,\u202f2012** \u2013 The Head of Government of Brazil engaged in diplomatic cooperation with the Military of Brazil, specifically providing policy support.\n\nNo other interactions between the Head of Government of Brazil and the Military of Brazil are mentioned in the context for this period.",
+      "gold": "During the period from 2005 to 2015, the significant interactions between the Head of Government of Brazil and the Military of Brazil included the following:\n\n- On April 19, 2005, the Head of Government of Brazil praised or endorsed the Military of Brazil.\n- On April 2, 2006, the Head of Government in Brazil demanded something from the Military in Brazil.\n- On February 20, 2010, the Head of Government of Brazil was arrested, detained, or charged with legal action by the Brazilian military.\n- On August 3, 2011, the Head of Government of Brazil consulted with the Military of Brazil.\n- On November 27, 2012, the Head of Government of Brazil expressed intent to engage in diplomatic cooperation, such as policy support, with the Military of Brazil.\n- On July 24, 2015, the Head of Government in Brazil ordered the military to expel or deport certain individuals.",
+      "error": null
+    },
+    {
+      "idx": 202,
+      "shifted": true,
+      "shift_type": "distractors",
+      "f1": 0.17592592592592593,
+      "needle_recall": 0.16666666666666666,
+      "item_recall": 0.3333333333333333,
+      "retrieval": 0.16666666666666666,
+      "disagreement": 0.9807692307692307,
+      "eval_scores": {
+        "information_theoretic": 0.04225352112676056,
+        "boundary": 0.9807692307692307,
+        "goodhart_resistant": 0.0
+      },
+      "latency": 71.9519431591034,
+      "k_star": 20,
+      "depth": 1,
+      "task_type": "qa",
+      "prediction": "The provided context does not contain any information about the Head of Government of Brazil interacting with the Military of Brazil between\u202f2005\u202fand\u202f2015. The only Brazil\u2011related fragment in the text is the phrase \u201cwith the Military of Brazil on August\u202f3,\u202f2011,\u201d which does not identify the Head of Government, describe the nature of the interaction, or provide any other details. Consequently, no significant interactions can be listed from the given material.",
+      "gold": "During the period from 2005 to 2015, the significant interactions between the Head of Government of Brazil and the Military of Brazil included the following:\n\n- On April 19, 2005, the Head of Government of Brazil praised or endorsed the Military of Brazil.\n- On April 2, 2006, the Head of Government in Brazil demanded something from the Military in Brazil.\n- On February 20, 2010, the Head of Government of Brazil was arrested, detained, or charged with legal action by the Brazilian military.\n- On August 3, 2011, the Head of Government of Brazil consulted with the Military of Brazil.\n- On November 27, 2012, the Head of Government of Brazil expressed intent to engage in diplomatic cooperation, such as policy support, with the Military of Brazil.\n- On July 24, 2015, the Head of Government in Brazil ordered the military to expel or deport certain individuals.",
+      "error": null
+    },
+    {
+      "idx": 3,
+      "shifted": false,
+      "shift_type": "none",
+      "f1": 0.0,
+      "needle_recall": 0.0,
+      "item_recall": 0.0,
+      "retrieval": 0.0,
+      "disagreement": 0.0,
+      "eval_scores": {
+        "information_theoretic": 1.0,
+        "boundary": 1.0,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 227.44194149971008,
+      "k_star": 2,
+      "depth": 1,
+      "task_type": "extraction",
+      "prediction": "No result produced.",
+      "gold": "\u6839\u636e\u8d75\u6770\u7684\u8bb0\u4e8b\u7684\u65f6\u95f4\u987a\u5e8f\uff0c\u4f5c\u8005\u6240\u7ecf\u5386\u7684\u6d3b\u52a8\u5982\u4e0b\uff1a\n- 2013\u5e7411\u670801\u65e5\uff1a\u665a\u4e0a\u548c\u540c\u4e8b\u4e00\u8d77\u53bb\u5403\u65e5\u672c\u6599\u7406\u3002\n- 2013\u5e7411\u670802\u65e5\uff1a\u4e0b\u5348\u524d\u5f80\u5065\u8eab\u623f\u8fdb\u884c\u4e86\u4e00\u6b21\u5168\u8eab\u953b\u70bc\u3002\n- 2013\u5e7411\u670803\u65e5\uff1a\u65e9\u4e0a\u5728\u516c\u53f8\u53c2\u52a0\u4e86\u4e00\u4e2a\u56e2\u961f\u5efa\u8bbe\u6d3b\u52a8\u3002\n- 2013\u5e7411\u670804\u65e5\uff1a\u665a\u4e0a\u5728\u5bb6\u91cc\u770b\u4e86\u4e00\u90e8\u5173\u4e8e\u73af\u4fdd\u7684\u7eaa\u5f55\u7247\u3002\n- 2013\u5e7411\u670807\u65e5\uff1a\u6574\u7406\u4e86\u5bb6\u91cc\u7684\u4e66\u7c4d\u548c\u6587\u4ef6\u3002\n- 2013\u5e7411\u670810\u65e5\uff1a\u65e9\u4e0a\u5728\u516c\u53f8\u5b8c\u6210\u4e86\u4e00\u4efd\u9500\u552e\u62a5\u544a\uff0c\u5f97\u5230\u4e86\u9886\u5bfc\u7684\u8ba4\u53ef\u3002\n- 2013\u5e7411\u670811\u65e5\uff1a\u4e0b\u5348\u5728\u827a\u672f\u753b\u5eca\u53c2\u89c2\u4e86\u4e00\u573a\u6444\u5f71\u5c55\u89c8\n- 2013\u5e7411\u670813\u65e5\uff1a\u5728\u5317\u4eac\u7684798\u827a\u672f\u533a\u770b\u5c55\u89c8\n- 2013\u5e7411\u670815\u65e5\uff1a\u5728\u516c\u56ed\u91cc\u53c2\u52a0\u4e86\u4e00\u573a\u745c\u4f3d\u8bfe\u7a0b\uff0c\u653e\u677e\u8eab\u5fc3\u3002\n- 2013\u5e7411\u670818\u65e5\uff1a\u4e0b\u5348\u5728\u753b\u5ba4\u5b8c\u6210\u4e86\u4e00\u5e45\u98ce\u666f\u753b\u4f5c\u54c1\u3002\n- 2013\u5e7411\u670821\u65e5\uff1a\u4e0e\u670b\u53cb\u5171\u540c\u89c2\u770b\u4e86\u4e00\u90e8\u60ac\u7591\u7535\u5f71\u3002\n- 2013\u5e7411\u670827\u65e5\uff1a\u665a\u4e0a\u5728\u5bb6\u91cc\u5c1d\u8bd5\u5236\u4f5c\u4e86\u4e00\u9053\u4ece\u672a\u505a\u8fc7\u7684\u83dc\u80b4\u3002\n- 2013\u5e7411\u670828\u65e5\uff1a\u5728\u5bb6\u4eb2\u624b\u5236\u4f5c\u4e86\u4e00\u987f\u5065\u5eb7\u7684\u665a\u9910\u3002",
+      "error": null
+    },
+    {
+      "idx": 301,
+      "shifted": true,
+      "shift_type": "needle_position",
+      "f1": 0.0,
+      "needle_recall": 0.0,
+      "item_recall": 0.0,
+      "retrieval": 0.0,
+      "disagreement": 0.5,
+      "eval_scores": {
+        "information_theoretic": 1.0,
+        "boundary": 1.0,
+        "goodhart_resistant": 0.5
+      },
+      "latency": 222.4059944152832,
+      "k_star": 2,
+      "depth": 1,
+      "task_type": "extraction",
+      "prediction": "No result produced.",
+      "gold": "\u6839\u636e\u8d75\u6770\u7684\u8bb0\u4e8b\u7684\u65f6\u95f4\u987a\u5e8f\uff0c\u4f5c\u8005\u6240\u7ecf\u5386\u7684\u6d3b\u52a8\u5982\u4e0b\uff1a\n- 2013\u5e7411\u670801\u65e5\uff1a\u665a\u4e0a\u548c\u540c\u4e8b\u4e00\u8d77\u53bb\u5403\u65e5\u672c\u6599\u7406\u3002\n- 2013\u5e7411\u670802\u65e5\uff1a\u4e0b\u5348\u524d\u5f80\u5065\u8eab\u623f\u8fdb\u884c\u4e86\u4e00\u6b21\u5168\u8eab\u953b\u70bc\u3002\n- 2013\u5e7411\u670803\u65e5\uff1a\u65e9\u4e0a\u5728\u516c\u53f8\u53c2\u52a0\u4e86\u4e00\u4e2a\u56e2\u961f\u5efa\u8bbe\u6d3b\u52a8\u3002\n- 2013\u5e7411\u670804\u65e5\uff1a\u665a\u4e0a\u5728\u5bb6\u91cc\u770b\u4e86\u4e00\u90e8\u5173\u4e8e\u73af\u4fdd\u7684\u7eaa\u5f55\u7247\u3002\n- 2013\u5e7411\u670807\u65e5\uff1a\u6574\u7406\u4e86\u5bb6\u91cc\u7684\u4e66\u7c4d\u548c\u6587\u4ef6\u3002\n- 2013\u5e7411\u670810\u65e5\uff1a\u65e9\u4e0a\u5728\u516c\u53f8\u5b8c\u6210\u4e86\u4e00\u4efd\u9500\u552e\u62a5\u544a\uff0c\u5f97\u5230\u4e86\u9886\u5bfc\u7684\u8ba4\u53ef\u3002\n- 2013\u5e7411\u670811\u65e5\uff1a\u4e0b\u5348\u5728\u827a\u672f\u753b\u5eca\u53c2\u89c2\u4e86\u4e00\u573a\u6444\u5f71\u5c55\u89c8\n- 2013\u5e7411\u670813\u65e5\uff1a\u5728\u5317\u4eac\u7684798\u827a\u672f\u533a\u770b\u5c55\u89c8\n- 2013\u5e7411\u670815\u65e5\uff1a\u5728\u516c\u56ed\u91cc\u53c2\u52a0\u4e86\u4e00\u573a\u745c\u4f3d\u8bfe\u7a0b\uff0c\u653e\u677e\u8eab\u5fc3\u3002\n- 2013\u5e7411\u670818\u65e5\uff1a\u4e0b\u5348\u5728\u753b\u5ba4\u5b8c\u6210\u4e86\u4e00\u5e45\u98ce\u666f\u753b\u4f5c\u54c1\u3002\n- 2013\u5e7411\u670821\u65e5\uff1a\u4e0e\u670b\u53cb\u5171\u540c\u89c2\u770b\u4e86\u4e00\u90e8\u60ac\u7591\u7535\u5f71\u3002\n- 2013\u5e7411\u670827\u65e5\uff1a\u665a\u4e0a\u5728\u5bb6\u91cc\u5c1d\u8bd5\u5236\u4f5c\u4e86\u4e00\u9053\u4ece\u672a\u505a\u8fc7\u7684\u83dc\u80b4\u3002\n- 2013\u5e7411\u670828\u65e5\uff1a\u5728\u5bb6\u4eb2\u624b\u5236\u4f5c\u4e86\u4e00\u987f\u5065\u5eb7\u7684\u665a\u9910\u3002",
+      "error": null
+    },
+    {
+      "idx": 302,
+      "shifted": true,
+      "shift_type": "distractors",
+      "f1": 0.0,
+      "needle_recall": 0.5384615384615384,
+      "item_recall": 0.0,
+      "retrieval": 0.5384615384615384,
+      "disagreement": 0.9619047619047619,
+      "eval_scores": {
+        "information_theoretic": 0.0380952380952381,
+        "boundary": 1.0,
+        "goodhart_resistant": 0.5
+      },
+      "latency": 212.87942147254944,
+      "k_star": 2,
+      "depth": 1,
+      "task_type": "extraction",
+      "prediction": "- 2013\u5e7411\u670802\u65e5: In the afternoon, went to the gym for a full-body workout.\n- 2013\u5e7411\u670803\u65e5: In the morning, participated in a team-building activity at the company.\n- 2013\u5e7411\u670804\u65e5: In the evening at home, watched a documentary about environmental protection.\n- 2013\u5e7411\u670807\u65e5: Organized books and documents at home.\n- 2013\u5e7411\u670811\u65e5: In the afternoon, visited a photography exhibition at an art gallery.\n- 2013\u5e7411\u670813\u65e5: Visited an exhibition at Beijing's 798 Art District.\n- 2013\u5e7411\u670828\u65e5: At home, personally prepared a healthy dinner.",
+      "gold": "\u6839\u636e\u8d75\u6770\u7684\u8bb0\u4e8b\u7684\u65f6\u95f4\u987a\u5e8f\uff0c\u4f5c\u8005\u6240\u7ecf\u5386\u7684\u6d3b\u52a8\u5982\u4e0b\uff1a\n- 2013\u5e7411\u670801\u65e5\uff1a\u665a\u4e0a\u548c\u540c\u4e8b\u4e00\u8d77\u53bb\u5403\u65e5\u672c\u6599\u7406\u3002\n- 2013\u5e7411\u670802\u65e5\uff1a\u4e0b\u5348\u524d\u5f80\u5065\u8eab\u623f\u8fdb\u884c\u4e86\u4e00\u6b21\u5168\u8eab\u953b\u70bc\u3002\n- 2013\u5e7411\u670803\u65e5\uff1a\u65e9\u4e0a\u5728\u516c\u53f8\u53c2\u52a0\u4e86\u4e00\u4e2a\u56e2\u961f\u5efa\u8bbe\u6d3b\u52a8\u3002\n- 2013\u5e7411\u670804\u65e5\uff1a\u665a\u4e0a\u5728\u5bb6\u91cc\u770b\u4e86\u4e00\u90e8\u5173\u4e8e\u73af\u4fdd\u7684\u7eaa\u5f55\u7247\u3002\n- 2013\u5e7411\u670807\u65e5\uff1a\u6574\u7406\u4e86\u5bb6\u91cc\u7684\u4e66\u7c4d\u548c\u6587\u4ef6\u3002\n- 2013\u5e7411\u670810\u65e5\uff1a\u65e9\u4e0a\u5728\u516c\u53f8\u5b8c\u6210\u4e86\u4e00\u4efd\u9500\u552e\u62a5\u544a\uff0c\u5f97\u5230\u4e86\u9886\u5bfc\u7684\u8ba4\u53ef\u3002\n- 2013\u5e7411\u670811\u65e5\uff1a\u4e0b\u5348\u5728\u827a\u672f\u753b\u5eca\u53c2\u89c2\u4e86\u4e00\u573a\u6444\u5f71\u5c55\u89c8\n- 2013\u5e7411\u670813\u65e5\uff1a\u5728\u5317\u4eac\u7684798\u827a\u672f\u533a\u770b\u5c55\u89c8\n- 2013\u5e7411\u670815\u65e5\uff1a\u5728\u516c\u56ed\u91cc\u53c2\u52a0\u4e86\u4e00\u573a\u745c\u4f3d\u8bfe\u7a0b\uff0c\u653e\u677e\u8eab\u5fc3\u3002\n- 2013\u5e7411\u670818\u65e5\uff1a\u4e0b\u5348\u5728\u753b\u5ba4\u5b8c\u6210\u4e86\u4e00\u5e45\u98ce\u666f\u753b\u4f5c\u54c1\u3002\n- 2013\u5e7411\u670821\u65e5\uff1a\u4e0e\u670b\u53cb\u5171\u540c\u89c2\u770b\u4e86\u4e00\u90e8\u60ac\u7591\u7535\u5f71\u3002\n- 2013\u5e7411\u670827\u65e5\uff1a\u665a\u4e0a\u5728\u5bb6\u91cc\u5c1d\u8bd5\u5236\u4f5c\u4e86\u4e00\u9053\u4ece\u672a\u505a\u8fc7\u7684\u83dc\u80b4\u3002\n- 2013\u5e7411\u670828\u65e5\uff1a\u5728\u5bb6\u4eb2\u624b\u5236\u4f5c\u4e86\u4e00\u987f\u5065\u5eb7\u7684\u665a\u9910\u3002",
+      "error": null
+    }
+  ]
+}

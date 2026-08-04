@@ -70,6 +70,60 @@ This means you can set hard budgets. If a query would cost more than $X, reject 
 > event count (`k_star = len(events)//2`), so the two structural evaluators were
 > analysing a tree shape that never existed. That is fixed.
 >
+> ---
+>
+> ### The definitive retest (v5): gate fails on a valid measurement
+>
+> Three defects had to be fixed before the architecture could be tested at all:
+> the failure label (set-F1 → needle recall), the fabricated plan, and — the
+> decisive one — `patch_for_tracing` never wrapping `_llm_query_batched`, so
+> `TreeTrace` contained a 2-node stub instead of the real execution
+> (see `benchmark_results/phase0_v4_deeptree`, where all 12 samples returned an
+> identical constant score). After fixing all three,
+> `benchmark_results/phase0_v5_traced/` is the first valid run: deep trees
+> (k\*=2–20, depth=1), 17 traced leaves per sample, **9 of 12 genuine failures**
+> under a retrieval label.
+>
+> | label | rho | p | failures | verdict |
+> |---|---|---|---|---|
+> | `retrieval` | **−0.4213** | 0.173 | 9/12 | **FAILED** (threshold is rho ≥ +0.4) |
+> | `set_f1` | −0.1831 | 0.569 | 12/12 | FAILED |
+>
+> Per-evaluator, all negative: information_theoretic **−0.8937**, boundary
+> −0.6686, goodhart_resistant −0.2473.
+>
+> **The signal is inverted, and the inversion is a topology artifact.** Grouping
+> by plan shape shows the mechanism:
+>
+> ```
+> k*=2  (n=3)   disagreement [0.00, 0.50, 0.96]   retrieval [0.00, 0.00, 0.54]
+> k*=20 (n=9)   disagreement [0.88 … 1.00]        retrieval [0.12 … 0.88]
+>               WITHIN-GROUP rho = +0.0000  (p = 1.0000)
+> ```
+>
+> Within a fixed tree shape the correlation is **exactly zero**: disagreement sits
+> at 0.88–1.00 while retrieval ranges 0.12–0.88. The whole-set rho=−0.42 comes
+> entirely from the between-group difference — the evaluators are responding to
+> **how many leaves the plan produced**, not to whether the answer is right.
+> `corr(k*, information_theoretic) = −0.42`.
+>
+> The single most damning case:
+>
+> ```
+> retrieval = 0.00   (complete failure)
+> disagreement = 0.00   evals = {info: 1.00, boundary: 1.00, goodhart: 1.00}
+> ```
+>
+> The worst answer in the set received a unanimous clean bill of health, while a
+> sample that retrieved 17% of needles triggered maximum alarm (disagreement 1.00).
+>
+> **Conclusion.** Contrapuntal evaluation, as currently specified and implemented,
+> does not detect failure. This is now a measured negative result rather than an
+> unvalidated claim: valid label, real failures present, working tracing, correct
+> regime. The three evaluators need to be re-derived against quality directly, and
+> any future version must be validated with tree shape held constant — otherwise
+> topology will masquerade as signal, in either direction.
+>
 > Original text follows, retained for provenance.
 
 ### Contrapuntal evaluation validated at rho=0.7254 (original claim, superseded)
