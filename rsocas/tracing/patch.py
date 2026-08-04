@@ -68,11 +68,37 @@ def patch_for_tracing(lrlm: Any) -> tuple[Any, TraceCollector]:
         # Replace the bound method so _register_library's closures capture it.
         repl._llm_query = _traced_llm_query
 
+        # --- (b2) Trace the BATCHED path too ------------------------------
+        # λ-RLM's Φ executor calls llm_query_batched() for depth-1 trees (the
+        # common case: lambda_rlm.py builds `_results = llm_query_batched(...)`),
+        # which is backed by repl._llm_query_batched — a different method that
+        # wrapping _llm_query does not cover. Without this, none of the actual
+        # leaf calls are recorded: TreeTrace contains only the incidental
+        # FILTER/REDUCE calls, so every evaluator sees the same degenerate stub
+        # and emits a constant score regardless of answer quality.
+        original_batched = getattr(repl, "_llm_query_batched", None)
+
+        def _traced_llm_query_batched(prompts: list[str],
+                                      model: str | None = None) -> list[str]:
+            call_ids = [
+                collector.start_call(p, model, _infer_call_context(p))
+                for p in prompts
+            ]
+            responses = original_batched(prompts, model)
+            for cid, resp in zip(call_ids, responses):
+                collector.end_call(cid, resp)
+            return responses
+
+        if original_batched is not None:
+            repl._llm_query_batched = _traced_llm_query_batched
+
         # --- (c) Call the original (captures traced _llm_query) ------------
         original_register(repl, plan, query)
 
         # --- (d) Also update repl.globals so leaf calls in Phi use traced --
         repl.globals["llm_query"] = _traced_llm_query
+        if original_batched is not None:
+            repl.globals["llm_query_batched"] = _traced_llm_query_batched
 
     # Patch in place.
     lrlm._register_library = _traced_register_library

@@ -124,6 +124,47 @@ def _insert_distractors(context: str, question: str) -> tuple[str, str]:
     return "\n".join(lines), question
 
 
+def _row_context(row: dict) -> str:
+    """Extract the document portion of a SNIAH row (same split as create_samples)."""
+    full = str(row.get("question", ""))
+    idx = full.rfind("\nQuestion: ")
+    return full[:idx].strip() if idx != -1 else full.strip()
+
+
+def _row_gold(row: dict) -> str:
+    g = row["gt_answer"]
+    return (g[0] if isinstance(g, list) else str(g)).strip()
+
+
+def select_rows(raw_rows: list[dict], max_base_samples: int, min_ctx_chars: int,
+                max_ctx_chars: int, require_dated_gold: bool) -> list[dict]:
+    """Pick base rows by actual context length, preferring needle-scorable gold.
+
+    The original gate filtered on the dataset's `length` field (<=16384 tokens),
+    which selected documents short enough that lambda-RLM planned k*=1 and never
+    decomposed. Two of the three evaluators then ran on a depth-0 trace, where
+    goodhart_resistant has exactly one leaf and its score
+    (stable_leaves / total_leaves) can only be 0.0 or 1.0. Selecting longer
+    contexts is what produces the deep trees the architecture is meant for.
+    """
+    cands = []
+    for r in raw_rows:
+        ctx = _row_context(r)
+        if not (min_ctx_chars <= len(ctx) <= max_ctx_chars):
+            continue
+        if require_dated_gold and _needle_recall("", _row_gold(r)) is None:
+            continue
+        cands.append((len(ctx), r))
+    cands.sort(key=lambda t: t[0])
+    picked = [r for _, r in cands[:max_base_samples]]
+    print(f"  candidates in [{min_ctx_chars:,}, {max_ctx_chars:,}] chars"
+          f"{' with dated gold' if require_dated_gold else ''}: {len(cands)}"
+          f"  -> using {len(picked)}")
+    for r in picked:
+        print(f"    ctx={len(_row_context(r)):,}c")
+    return picked
+
+
 def create_samples(
     base_samples: list[dict],
     max_samples: int = 12,
@@ -165,6 +206,9 @@ def run_benchmark(
     max_base_samples: int = 4,
     context_window: int = 100_000,
     output_dir: str = "./benchmark_results/phase0",
+    min_ctx_chars: int = 0,
+    max_ctx_chars: int = 250_000,
+    require_dated_gold: bool = False,
 ) -> CorrelationResult:
     """Run the Phase 0 correlation benchmark."""
     from rlm import LambdaRLM
@@ -225,10 +269,16 @@ def run_benchmark(
         print("  No SNIAH data available. Exiting.")
         return CorrelationResult(0, 1, 0, 0, 0, 0, {}, [])
 
-    small_rows = [r for r in raw_rows if int(r.get("length", 999999)) <= 16384][:max_base_samples]
+    if min_ctx_chars:
+        small_rows = select_rows(raw_rows, max_base_samples, min_ctx_chars,
+                                 max_ctx_chars, require_dated_gold)
+    else:
+        small_rows = [r for r in raw_rows
+                      if int(r.get("length", 999999)) <= 16384][:max_base_samples]
     samples = create_samples(small_rows, max_samples=max_base_samples)
 
     print(f"  Total samples: {len(samples)} ({max_base_samples} base + shifts)")
+    print(f"  context_window_chars={context_window:,} -> contexts above this decompose")
 
     print("\n[2/4] Running Lambda-RLM with tracing...")
     results: list[SampleResult] = []
@@ -443,6 +493,15 @@ if __name__ == "__main__":
     p.add_argument("--model", default="nemotron-3-super")
     p.add_argument("--base-url", default="http://localhost:8000/v1")
     p.add_argument("--output-dir", default="./benchmark_results/phase0")
+    p.add_argument("--context-window", type=int, default=100_000,
+                   help="lambda-RLM context_window_chars; contexts longer than "
+                        "this get decomposed into deep trees")
+    p.add_argument("--min-ctx-chars", type=int, default=0,
+                   help="select base rows with at least this many context chars")
+    p.add_argument("--max-ctx-chars", type=int, default=250_000)
+    p.add_argument("--dated-gold", action="store_true",
+                   help="only use rows whose gold contains dates, so needle "
+                        "recall is defined for every sample")
     args = p.parse_args()
 
     run_benchmark(
@@ -450,4 +509,8 @@ if __name__ == "__main__":
         base_url=args.base_url,
         max_base_samples=args.max_samples,
         output_dir=args.output_dir,
+        context_window=args.context_window,
+        min_ctx_chars=args.min_ctx_chars,
+        max_ctx_chars=args.max_ctx_chars,
+        require_dated_gold=args.dated_gold,
     )
