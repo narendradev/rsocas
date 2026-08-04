@@ -12,6 +12,15 @@ Working name for a unified AI architecture synthesizing five frameworks:
 
 ## Status
 
+> **2026-08-03 — the Phase 0 gate is withdrawn.** The rho=0.7254 result that
+> validated contrapuntal evaluation was computed against a failure label
+> (set-based token F1) since measured at r=0.121 with actual retrieval. Re-run
+> against needle recall, the 12 validation samples contain **zero failures** and
+> rho is -0.3057 (p=0.334); even under the original label it is now -0.0350
+> (p=0.914). The idea is unvalidated, not refuted — see
+> `docs/ADVANTAGES-AND-SHORTFALLS.md` for the retest that would settle it.
+
+
 **Pre-implementation.** This repo contains raw thinking, not code. The documents capture the thought process of discovering how these frameworks compose — including dead ends, uncertainties, and ideas that might be wrong.
 
 ## Documents

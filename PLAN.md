@@ -359,9 +359,9 @@ rsocas/
 | **B** (Contrapuntal Evaluation) | `evaluation/` | Contract 1, Contract 2 | Contracts agreed |
 | **C** (Combinator Lifecycle) | `combinators/` | Contract 5 | Contracts agreed |
 | **D** (Breathing/Tempo) | `breathing/` | Contract 5 (TempoController) | Contracts agreed |
-| **E** (Framework Adapters) | `adapters/` | Contracts 3,4,6 + GEPA/DSPy APIs | Phase 0 validated |
+| **E** (Framework Adapters) | `adapters/` | Contracts 3,4,6 + GEPA/DSPy APIs | ~~Phase 0 validated~~ — gate withdrawn 2026-08-03 |
 | **F** (Archive) | `archive/` | Contract 1, Contract 2 | Contracts agreed |
-| **G** (Orchestrator) | `development/` | ALL contracts | Phase 0 validated |
+| **G** (Orchestrator) | `development/` | ALL contracts | ~~Phase 0 validated~~ — gate withdrawn 2026-08-03 |
 
 **Parallelism**: Agents A, B, C, D, F can ALL start simultaneously after contracts are agreed. They depend only on contracts, not on each other. Agent E starts after Phase 0 validates. Agent G starts last.
 

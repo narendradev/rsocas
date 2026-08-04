@@ -1,0 +1,311 @@
+{
+  "spearman_rho": -0.3057,
+  "spearman_p": 0.333893,
+  "precision_at_5": 0.0,
+  "precision_at_10": 0.0,
+  "n_samples": 12,
+  "n_failures": 0,
+  "per_evaluator": {
+    "information_theoretic": 0.1461,
+    "boundary": -0.0437,
+    "goodhart_resistant": -0.1348
+  },
+  "gate_passed": false,
+  "primary_label": "retrieval",
+  "analysis_by_label": {
+    "set_f1": {
+      "label": "set_f1",
+      "n": 12,
+      "spearman_rho": -0.035,
+      "spearman_p": 0.914093,
+      "precision_at_5": 0.8,
+      "precision_at_10": 0.4,
+      "n_failures": 6,
+      "per_evaluator": {
+        "information_theoretic": 0.4913,
+        "boundary": -0.6434,
+        "goodhart_resistant": -0.1943
+      }
+    },
+    "retrieval": {
+      "label": "retrieval",
+      "n": 12,
+      "spearman_rho": -0.3057,
+      "spearman_p": 0.333893,
+      "precision_at_5": 0.0,
+      "precision_at_10": 0.0,
+      "n_failures": 0,
+      "per_evaluator": {
+        "information_theoretic": 0.1461,
+        "boundary": -0.0437,
+        "goodhart_resistant": -0.1348
+      }
+    }
+  },
+  "samples": [
+    {
+      "idx": 0,
+      "shifted": false,
+      "shift_type": "none",
+      "f1": 0.3081570996978852,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.05840882921119506,
+      "eval_scores": {
+        "information_theoretic": 0.9415911707888049,
+        "boundary": 0.9780082987551867,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 76.19951510429382,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "qa",
+      "prediction": "- January\u202f2,\u202f2018 \u2013 The Governor of India made an appeal or request to the citizens of India.  \n- January\u202f8,\u202f2018 \u2013 The Governor of India had a demand\u2011related interaction with a citizen of India.  \n- February\u202f21,\u202f2018 \u2013 The Governor of India expressed the intent to release certain persons or property to a citizen of India.  \n- April\u202f8,\u202f2018 \u2013 The Governor of India returned and released certain individuals to the citizens of India.  \n- May\u202f4,\u202f2018 \u2013 A Governor of India criticized or denounced a citizen of India.  \n- July\u202f1,\u202f2018 \u2013 The Governor of India provided aid to the citizens of India.  \n- July\u202f9,\u202f2018 \u2013 A Governor of India physically assaulted a citizen of India.  \n- August\u202f2,\u202f2018 \u2013 The Governor of India made an optimistic comment to the citizens of India.  \n- October\u202f4,\u202f2018 \u2013 The Governor of India had a certain yield in relation to the citizens of India.",
+      "gold": "The actions and interactions that the Governor of India had with the citizens of India from 2018 onwards are as follows:\n- On January 2, 2018, the Governor of India made an appeal or request to the citizens of India.\n- On January 8, 2018, the Governor of India had a demand-related interaction with a citizen of India.\n- On February 21, 2018, the Governor of India expressed the intent to release certain persons or property to a citizen of India.\n- On April 8, 2018, the Governor of India returned and released certain individuals to the citizens of India.\n- On May 4, 2018, a Governor of India criticized or denounced a citizen of India.\n- On July 1, 2018, the Governor of India provided aid to the citizens of India.\n- On July 9, 2018, a Governor of India physically assaulted a Citizen of India.\n- On August 2, 2018, the Governor of India made an optimistic comment to the citizens of India.\n- On October 4, 2018, the Governor of India had a certain yield in relation to the citizens of India.",
+      "error": null
+    },
+    {
+      "idx": 1,
+      "shifted": true,
+      "shift_type": "needle_position",
+      "f1": 0.33898305084745767,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.021161825726141115,
+      "eval_scores": {
+        "information_theoretic": 1.0,
+        "boundary": 0.9788381742738589,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 43.288055419921875,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "qa",
+      "prediction": "- Provided aid to the citizens of India \u2013\u202fJuly\u202f1,\u202f2018  \n- Returned and released certain individuals to the citizens of India \u2013\u202fApril\u202f8,\u202f2018  \n- Made an optimistic comment to the citizens of India \u2013\u202fAugust\u202f2,\u202f2018  \n- Had a certain yield in relation to the citizens of India \u2013\u202fOctober\u202f4,\u202f2018  \n- Made an appeal or request to the citizens of India \u2013\u202fJanuary\u202f2,\u202f2018  \n- Physically assaulted a citizen of India \u2013\u202fJuly\u202f9,\u202f2018  \n- Criticized or denounced a citizen of India \u2013\u202fMay\u202f4,\u202f2018  \n- Had a demand\u2011related interaction with a citizen of India \u2013\u202fJanuary\u202f8,\u202f2018  \n- Expressed the intent to release certain persons or property to a citizen of India \u2013\u202fFebruary\u202f21,\u202f2018",
+      "gold": "The actions and interactions that the Governor of India had with the citizens of India from 2018 onwards are as follows:\n- On January 2, 2018, the Governor of India made an appeal or request to the citizens of India.\n- On January 8, 2018, the Governor of India had a demand-related interaction with a citizen of India.\n- On February 21, 2018, the Governor of India expressed the intent to release certain persons or property to a citizen of India.\n- On April 8, 2018, the Governor of India returned and released certain individuals to the citizens of India.\n- On May 4, 2018, a Governor of India criticized or denounced a citizen of India.\n- On July 1, 2018, the Governor of India provided aid to the citizens of India.\n- On July 9, 2018, a Governor of India physically assaulted a Citizen of India.\n- On August 2, 2018, the Governor of India made an optimistic comment to the citizens of India.\n- On October 4, 2018, the Governor of India had a certain yield in relation to the citizens of India.",
+      "error": null
+    },
+    {
+      "idx": 2,
+      "shifted": true,
+      "shift_type": "distractors",
+      "f1": 0.34576271186440677,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.021320213202132066,
+      "eval_scores": {
+        "information_theoretic": 1.0,
+        "boundary": 0.9786797867978679,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 44.77333116531372,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "qa",
+      "prediction": "- Provided aid to the citizens of India on July\u202f1,\u202f2018.  \n- Returned and released certain individuals to the citizens of India on April\u202f8,\u202f2018.  \n- Made an optimistic comment to the citizens of India on August\u202f2,\u202f2018.  \n- Had a certain yield in relation to the citizens of India on October\u202f4,\u202f2018.  \n- Made an appeal or request to the citizens of India on January\u202f2,\u202f2018.  \n- Physically assaulted a citizen of India on July\u202f9,\u202f2018.  \n- Criticized or denounced a citizen of India on May\u202f4,\u202f2018.  \n- Had a demand\u2011related interaction with a citizen of India on January\u202f8,\u202f2018.  \n- Expressed the intent to release certain persons or property to a citizen of India on February\u202f21,\u202f2018.",
+      "gold": "The actions and interactions that the Governor of India had with the citizens of India from 2018 onwards are as follows:\n- On January 2, 2018, the Governor of India made an appeal or request to the citizens of India.\n- On January 8, 2018, the Governor of India had a demand-related interaction with a citizen of India.\n- On February 21, 2018, the Governor of India expressed the intent to release certain persons or property to a citizen of India.\n- On April 8, 2018, the Governor of India returned and released certain individuals to the citizens of India.\n- On May 4, 2018, a Governor of India criticized or denounced a citizen of India.\n- On July 1, 2018, the Governor of India provided aid to the citizens of India.\n- On July 9, 2018, a Governor of India physically assaulted a Citizen of India.\n- On August 2, 2018, the Governor of India made an optimistic comment to the citizens of India.\n- On October 4, 2018, the Governor of India had a certain yield in relation to the citizens of India.",
+      "error": null
+    },
+    {
+      "idx": 1,
+      "shifted": false,
+      "shift_type": "none",
+      "f1": 0.5350877192982455,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.026936026936026924,
+      "eval_scores": {
+        "information_theoretic": 1.0,
+        "boundary": 0.9730639730639731,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 44.15476202964783,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "extraction",
+      "prediction": "- **May\u202f6,\u202f2011** \u2013 Went to a book club meeting at the library in the evening.  \n- **May\u202f14,\u202f2011** \u2013 Volunteered at a local animal shelter and helped take care of the animals.  \n- **May\u202f20,\u202f2011** \u2013 Went to a newly opened Thai restaurant with colleagues at noon to try authentic dishes.  \n- **May\u202f21,\u202f2011** \u2013 Spent the day volunteering at a local animal shelter.  \n- **May\u202f22,\u202f2011** \u2013 Attended a lecture on space exploration at the science center.  \n- **May\u202f24,\u202f2011** \u2013 Practiced piano at the music studio in the afternoon and improved my skills.  \n- **May\u202f30,\u202f2011** \u2013 Attended a photography workshop at the community center.",
+      "gold": "Based on the document, I found the following activities of Matthew Jackson during 5, 2011:\n- May 6, 2011\uff1aI went to a book club meeting at the library in the evening.\n- May 14, 2011\uff1aI volunteered at a local animal shelter today and helped take care of the animals.\n- May 20, 2011\uff1aI went to a newly opened Thai restaurant with my colleagues at noon to try their authentic dishes.\n- May 21, 2011\uff1aI spent the day volunteering at a local animal shelter.\n- May 22, 2011\uff1aI attended a lecture on space exploration at the science center.\n- May 24, 2011\uff1aI practiced piano at the music studio in the afternoon and improved my skills.\n- May 30, 2011\uff1aI attended a photography workshop at the community center today.",
+      "error": null
+    },
+    {
+      "idx": 101,
+      "shifted": true,
+      "shift_type": "needle_position",
+      "f1": 0.5286343612334801,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.02645502645502651,
+      "eval_scores": {
+        "information_theoretic": 1.0,
+        "boundary": 0.9735449735449735,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 39.76919460296631,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "extraction",
+      "prediction": "- **May\u202f6,\u202f2011** \u2013 Went to a book club meeting at the library in the evening.  \n- **May\u202f14,\u202f2011** \u2013 Volunteered at a local animal shelter and helped take care of the animals.  \n- **May\u202f20,\u202f2011** \u2013 Went to a newly opened Thai restaurant with colleagues at noon to try authentic dishes.  \n- **May\u202f21,\u202f2011** \u2013 Spent the day volunteering at a local animal shelter.  \n- **May\u202f22,\u202f2011** \u2013 Attended a lecture on space exploration at the science center.  \n- **May\u202f24,\u202f2011** \u2013 Practiced piano at the music studio in the afternoon and improved skills.  \n- **May\u202f30,\u202f2011** \u2013 Attended a photography workshop at the community center.",
+      "gold": "Based on the document, I found the following activities of Matthew Jackson during 5, 2011:\n- May 6, 2011\uff1aI went to a book club meeting at the library in the evening.\n- May 14, 2011\uff1aI volunteered at a local animal shelter today and helped take care of the animals.\n- May 20, 2011\uff1aI went to a newly opened Thai restaurant with my colleagues at noon to try their authentic dishes.\n- May 21, 2011\uff1aI spent the day volunteering at a local animal shelter.\n- May 22, 2011\uff1aI attended a lecture on space exploration at the science center.\n- May 24, 2011\uff1aI practiced piano at the music studio in the afternoon and improved my skills.\n- May 30, 2011\uff1aI attended a photography workshop at the community center today.",
+      "error": null
+    },
+    {
+      "idx": 102,
+      "shifted": true,
+      "shift_type": "distractors",
+      "f1": 0.5585585585585585,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 1.0,
+      "eval_scores": {
+        "information_theoretic": 1.0,
+        "boundary": 0.9724727100142383,
+        "goodhart_resistant": 0.0
+      },
+      "latency": 65.68322348594666,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "extraction",
+      "prediction": "- May\u202f6,\u202f2011: Went to a book club meeting at the library in the evening.  \n- May\u202f14,\u202f2011: Volunteered at a local animal shelter and helped take care of the animals.  \n- May\u202f20,\u202f2011: Went to a newly opened Thai restaurant with colleagues at noon to try their authentic dishes.  \n- May\u202f21,\u202f2011: Spent the day volunteering at a local animal shelter.  \n- May\u202f22,\u202f2011: Attended a lecture on space exploration at the science center.  \n- May\u202f24,\u202f2011: Practiced piano at the music studio in the afternoon and improved my skills.  \n- May\u202f30,\u202f2011: Attended a photography workshop at the community center.",
+      "gold": "Based on the document, I found the following activities of Matthew Jackson during 5, 2011:\n- May 6, 2011\uff1aI went to a book club meeting at the library in the evening.\n- May 14, 2011\uff1aI volunteered at a local animal shelter today and helped take care of the animals.\n- May 20, 2011\uff1aI went to a newly opened Thai restaurant with my colleagues at noon to try their authentic dishes.\n- May 21, 2011\uff1aI spent the day volunteering at a local animal shelter.\n- May 22, 2011\uff1aI attended a lecture on space exploration at the science center.\n- May 24, 2011\uff1aI practiced piano at the music studio in the afternoon and improved my skills.\n- May 30, 2011\uff1aI attended a photography workshop at the community center today.",
+      "error": null
+    },
+    {
+      "idx": 2,
+      "shifted": false,
+      "shift_type": "none",
+      "f1": 0.35862068965517246,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.12806778876072777,
+      "eval_scores": {
+        "information_theoretic": 0.8719322112392722,
+        "boundary": 0.9875486381322958,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 28.501420259475708,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "qa",
+      "prediction": "- Mahmoud Ahmadinejad visited the Head of Government of Qatar on December\u202f3,\u202f2007.  \n- Negotiations took place between Mahmoud Ahmadinejad and the Head of Government of Qatar on February\u202f27,\u202f2008.  \n- The Head of Government of Qatar was hosted by Mahmoud Ahmadinejad on August\u202f21,\u202f2008.  \n- Mahmoud Ahmadinejad had a telephone discussion with the Head of Government of Qatar on August\u202f13,\u202f2010.",
+      "gold": "During the years 2007-2010, the interactions between Mahmoud Ahmadinejad and the Head of Government of Qatar were as follows:\n\n- On December 3, 2007, Mahmoud Ahmadinejad made a visit to the Head of Government of Qatar.\n- On February 27, 2008, Mahmoud Ahmadinejad engaged in negotiations with the Head of Government of Qatar.\n- On August 21, 2008, Mahmoud Ahmadinejad hosted a visit from the Head of Government of Qatar.\n- On August 13, 2010, Mahmoud Ahmadinejad discussed by telephone with the Head of Government of Qatar.",
+      "error": null
+    },
+    {
+      "idx": 201,
+      "shifted": true,
+      "shift_type": "needle_position",
+      "f1": 0.3448275862068965,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.1315411667655615,
+      "eval_scores": {
+        "information_theoretic": 0.8684588332344385,
+        "boundary": 0.9899146625290923,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 40.475242376327515,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "qa",
+      "prediction": "- December\u202f3\u202f2007 \u2013 Mahmoud\u202fAhmadinejad visited the Head of Government of Qatar.  \n- February\u202f27\u202f2008 \u2013 Negotiations took place between Mahmoud\u202fAhmadinejad and the Head of Government of Qatar.  \n- August\u202f21\u202f2008 \u2013 The Head of Government of Qatar was hosted by Mahmoud\u202fAhmadinejad.  \n- August\u202f13\u202f2010 \u2013 Mahmoud\u202fAhmadinejad had a telephone discussion with the Head of Government of Qatar.",
+      "gold": "During the years 2007-2010, the interactions between Mahmoud Ahmadinejad and the Head of Government of Qatar were as follows:\n\n- On December 3, 2007, Mahmoud Ahmadinejad made a visit to the Head of Government of Qatar.\n- On February 27, 2008, Mahmoud Ahmadinejad engaged in negotiations with the Head of Government of Qatar.\n- On August 21, 2008, Mahmoud Ahmadinejad hosted a visit from the Head of Government of Qatar.\n- On August 13, 2010, Mahmoud Ahmadinejad discussed by telephone with the Head of Government of Qatar.",
+      "error": null
+    },
+    {
+      "idx": 202,
+      "shifted": true,
+      "shift_type": "distractors",
+      "f1": 0.37267080745341613,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.9869029275808937,
+      "eval_scores": {
+        "information_theoretic": 0.9218442333472676,
+        "boundary": 0.9869029275808937,
+        "goodhart_resistant": 0.0
+      },
+      "latency": 45.84817385673523,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "extraction",
+      "prediction": "Based on the provided context, the interactions between Mahmoud Ahmadinejad and the Head of Government of Qatar during 2007-2010 were:\n\n- December 3, 2007: Mahmoud Ahmadinejad visited the Head of Government of Qatar\n- February 27, 2008: Negotiations took place between Mahmoud Ahmadinejad and the Head of Government of Qatar\n- August 21, 2008: The Head of Government of Qatar was hosted by Mahmoud Ahmadinejad\n- August 13, 2010: Mahmoud Ahmadinejad had a telephone discussion with the Head of Government of Qatar",
+      "gold": "During the years 2007-2010, the interactions between Mahmoud Ahmadinejad and the Head of Government of Qatar were as follows:\n\n- On December 3, 2007, Mahmoud Ahmadinejad made a visit to the Head of Government of Qatar.\n- On February 27, 2008, Mahmoud Ahmadinejad engaged in negotiations with the Head of Government of Qatar.\n- On August 21, 2008, Mahmoud Ahmadinejad hosted a visit from the Head of Government of Qatar.\n- On August 13, 2010, Mahmoud Ahmadinejad discussed by telephone with the Head of Government of Qatar.",
+      "error": null
+    },
+    {
+      "idx": 3,
+      "shifted": false,
+      "shift_type": "none",
+      "f1": 0.5776173285198557,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.025286581254214457,
+      "eval_scores": {
+        "information_theoretic": 1.0,
+        "boundary": 0.9747134187457855,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 54.20787596702576,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "extraction",
+      "prediction": "- July\u202f2,\u202f2020: I attended a yoga class in the park this morning to relax and stay fit.  \n- July\u202f6,\u202f2020: I went to a jazz concert with my friends in the evening and enjoyed the live music.  \n- July\u202f11,\u202f2020: I went to a newly opened Thai restaurant with my colleagues at noon to try their authentic dishes.  \n- July\u202f14,\u202f2020: I took a guided tour of the historic city center.  \n- July\u202f16,\u202f2020: I volunteered at a local animal shelter today and helped take care of some pets.  \n- July\u202f22,\u202f2020: I watched a live theater performance at the city theater in the evening.  \n- July\u202f24,\u202f2020: I went hiking in the nearby mountains and discovered a hidden waterfall.  \n- July\u202f31,\u202f2020: I spent the afternoon volunteering at a community garden, helping to plant new flowers.",
+      "gold": "Elizabeth Thompson did the following things during 7, 2020:\n- July 2, 2020\uff1aI attended a yoga class in the park this morning to relax and stay fit.\n- July 6, 2020\uff1aI went to a jazz concert with my friends in the evening and enjoyed the live music.\n- July 11, 2020\uff1aI went to a newly opened Thai restaurant with my colleagues at noon to try their authentic dishes.\n- July 14, 2020\uff1aI took a guided tour of the historic city center.\n- July 16, 2020\uff1aI volunteered at a local animal shelter today and helped take care of some pets.\n- July 22, 2020\uff1aI watched a live theater performance at the city theater in the evening.\n- July 24, 2020\uff1aI went hiking in the nearby mountains and discovered a hidden waterfall.\n- July 31, 2020\uff1aI spent the afternoon volunteering at a community garden, helping to plant new flowers.",
+      "error": null
+    },
+    {
+      "idx": 301,
+      "shifted": true,
+      "shift_type": "needle_position",
+      "f1": 0.5328185328185328,
+      "needle_recall": 0.875,
+      "item_recall": 0.875,
+      "retrieval": 0.875,
+      "disagreement": 0.021922428330522714,
+      "eval_scores": {
+        "information_theoretic": 0.9829310928160595,
+        "boundary": 0.9780775716694773,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 73.79170060157776,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "extraction",
+      "prediction": "- July 2, 2020: I attended a yoga class in the park this morning to relax and stay fit.  \n- July 6, 2020: I went to a jazz concert with my friends in the evening and enjoyed the live music.  \n- July 11, 2020: I went to a newly opened Thai restaurant with my colleagues at noon to try their authentic dishes.  \n- July 14, 2020: I took a guided tour of the historic city center.  \n- July 22, 2020: I watched a live theater performance at the city theater in the evening.  \n- July 24, 2020: I went hiking in the nearby mountains and discovered a hidden waterfall.  \n- July 31, 2020: I spent the afternoon volunteering at a community garden, helping to plant new flowers.",
+      "gold": "Elizabeth Thompson did the following things during 7, 2020:\n- July 2, 2020\uff1aI attended a yoga class in the park this morning to relax and stay fit.\n- July 6, 2020\uff1aI went to a jazz concert with my friends in the evening and enjoyed the live music.\n- July 11, 2020\uff1aI went to a newly opened Thai restaurant with my colleagues at noon to try their authentic dishes.\n- July 14, 2020\uff1aI took a guided tour of the historic city center.\n- July 16, 2020\uff1aI volunteered at a local animal shelter today and helped take care of some pets.\n- July 22, 2020\uff1aI watched a live theater performance at the city theater in the evening.\n- July 24, 2020\uff1aI went hiking in the nearby mountains and discovered a hidden waterfall.\n- July 31, 2020\uff1aI spent the afternoon volunteering at a community garden, helping to plant new flowers.",
+      "error": null
+    },
+    {
+      "idx": 302,
+      "shifted": true,
+      "shift_type": "distractors",
+      "f1": 0.5895522388059702,
+      "needle_recall": 1.0,
+      "item_recall": 1.0,
+      "retrieval": 1.0,
+      "disagreement": 0.026139410187667522,
+      "eval_scores": {
+        "information_theoretic": 1.0,
+        "boundary": 0.9738605898123325,
+        "goodhart_resistant": 1.0
+      },
+      "latency": 55.56162452697754,
+      "k_star": 1,
+      "depth": 0,
+      "task_type": "extraction",
+      "prediction": "- July\u202f2\u202f2020: attended a yoga class in the park this morning to relax and stay fit.  \n- July\u202f6\u202f2020: went to a jazz concert with my friends in the evening and enjoyed the live music.  \n- July\u202f11\u202f2020: went to a newly opened Thai restaurant with my colleagues at noon to try their authentic dishes.  \n- July\u202f14\u202f2020: took a guided tour of the historic city center.  \n- July\u202f16\u202f2020: volunteered at a local animal shelter and helped take care of some pets.  \n- July\u202f22\u202f2020: watched a live theater performance at the city theater in the evening.  \n- July\u202f24\u202f2020: went hiking in the nearby mountains and discovered a hidden waterfall.  \n- July\u202f31\u202f2020: spent the afternoon volunteering at a community garden, helping to plant new flowers.",
+      "gold": "Elizabeth Thompson did the following things during 7, 2020:\n- July 2, 2020\uff1aI attended a yoga class in the park this morning to relax and stay fit.\n- July 6, 2020\uff1aI went to a jazz concert with my friends in the evening and enjoyed the live music.\n- July 11, 2020\uff1aI went to a newly opened Thai restaurant with my colleagues at noon to try their authentic dishes.\n- July 14, 2020\uff1aI took a guided tour of the historic city center.\n- July 16, 2020\uff1aI volunteered at a local animal shelter today and helped take care of some pets.\n- July 22, 2020\uff1aI watched a live theater performance at the city theater in the evening.\n- July 24, 2020\uff1aI went hiking in the nearby mountains and discovered a hidden waterfall.\n- July 31, 2020\uff1aI spent the afternoon volunteering at a community garden, helping to plant new flowers.",
+      "error": null
+    }
+  ]
+}

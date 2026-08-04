@@ -139,7 +139,7 @@ The Phase 0 benchmark (`rsocas/evaluation/benchmark.py`) tested whether evaluato
 ```
 Metric                   Value       Gate Threshold
 ─────────────────────    ─────────   ──────────────
-Spearman rho             0.7254      >= 0.4
+Spearman rho             0.7254      >= 0.4     [WITHDRAWN — see below]
 Spearman p-value         0.007588    < 0.05
 Precision@5              0.8         >= 0.7
 Precision@10             0.6         --
@@ -152,6 +152,13 @@ Per-evaluator correlation with failure:
   boundary               -0.7413
   goodhart_resistant      0.8569
 ```
+
+> **WITHDRAWN 2026-08-03.** Re-running this gate against a retrieval-based
+> failure label gives rho=-0.3057 (p=0.334) with **zero failures** among the 12
+> samples, and rho=-0.0350 (p=0.914) even under the original set-F1 label. The
+> composite signal is dominated by `goodhart_resistant`, which is binary (0.0 on
+> 2 samples, 1.0 on 10) and fires on samples with **perfect** needle recall. See
+> docs/ADVANTAGES-AND-SHORTFALLS.md and benchmark_results/phase0_v3_retrieval/.
 
 The composite disagreement (rho=0.7254) far exceeds either information-theoretic (0.265) or boundary (-0.7413) alone. The goodhart_resistant evaluator has the highest individual correlation (0.8569). The boundary evaluator has a negative correlation, meaning high boundary scores are associated with failure -- this is because boundary detection measures echo/copying, and some failure modes involve the model copying the prompt rather than answering.
 

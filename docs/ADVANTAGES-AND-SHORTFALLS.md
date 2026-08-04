@@ -17,7 +17,62 @@ C_hat = k*^d * C(tau*) + d * C_compose(k*) + C(500)
 
 This means you can set hard budgets. If a query would cost more than $X, reject it before executing. The accuracy bound `A_total >= (a_leaf)^d * (a_compose)^d` gives a worst-case quality floor. RSOCAS preserves these guarantees by tracing execution without modifying the control flow.
 
-### Contrapuntal evaluation validated at rho=0.7254
+### ~~Contrapuntal evaluation validated at rho=0.7254~~ — WITHDRAWN (2026-08-03)
+
+> **This claim is withdrawn.** A re-run of the Phase 0 gate
+> (`benchmark_results/phase0_v3_retrieval/`) does not support it, for three
+> independent reasons.
+>
+> **1. The original label was invalid.** Failure was defined as `set_F1 < 0.5`
+> using a local copy of lambda-rlm's set-based token F1. That metric has since
+> been measured at **r=0.121 against actual needle retrieval** (n=28,
+> `lambda-rlm/benchmark_results/main_n10_t10`). It largely scores verbosity.
+>
+> **2. Under a valid label there are no failures to predict.** Re-scoring the
+> same 12 samples by needle recall: **11 of 12 score 1.000**, one scores 0.875 —
+> **zero failures**. The gate asks "does disagreement predict failure?" against
+> an empty positive class. The set-F1 label had called 6 of these 12 perfect
+> retrievals "failures", purely because their F1 fell in 0.31–0.59.
+>
+> **3. rho does not reproduce even under the original label.**
+>
+> | label | rho | p | failures |
+> |---|---|---|---|
+> | `set_f1` (original definition) | **−0.0350** | 0.914 | 6/12 |
+> | `retrieval` (needle recall) | **−0.3057** | 0.334 | 0/12 |
+> | *as originally reported* | *+0.7254* | *0.0076* | *6/12* |
+>
+> **Gate verdict: FAILED on both labels.**
+>
+> **Why the composite signal misbehaves.** `goodhart_resistant` is not a graded
+> score — it returned exactly 0.0 on 2 samples and 1.0 on the other 10. When it
+> flips to 0.0 the composite disagreement jumps to ~1.0, so it dominates the
+> signal. Both 0.0 cases have needle recall **1.000** — disagreement fires
+> hardest on the model's *best* answers, which is why rho is negative. The
+> originally reported "best individual evaluator (rho=0.8569)" is this same
+> binary flip, which in that run happened to align with the set-F1 labels.
+>
+> **What this does and does not mean.** The *idea* — cheap disagreeing
+> evaluators detecting failure without a judge model — is not refuted. It is
+> **unvalidated**, and this experiment could not have validated it: the sample
+> set contains no genuine failures, and at `context_window=100_000` against
+> sub-16K-token inputs lambda-RLM plans `k*=1, depth=0`, so the two structural
+> evaluators ran on shallow traces where this very document notes they fall back
+> to weaker heuristics.
+>
+> A fair retest needs samples that genuinely fail. One set now exists:
+> `lambda-rlm/benchmark_results/split_vs_direct/` shows the split regime
+> (contexts >60K chars) averaging **0.327 needle recall with several 0.000s** —
+> about a two-thirds failure rate, on deep trees (k\*=2–20, depth=1). That is
+> where this architecture should be tested.
+>
+> Note also that the plan handed to the evaluators was fabricated from the trace
+> event count (`k_star = len(events)//2`), so the two structural evaluators were
+> analysing a tree shape that never existed. That is fixed.
+>
+> Original text follows, retained for provenance.
+
+### Contrapuntal evaluation validated at rho=0.7254 (original claim, superseded)
 
 Three cheap evaluators (no LLM calls for two of them) detect failures better than any single expensive evaluator. The Phase 0 benchmark on SNIAH with Nemotron-3-Super:
 
