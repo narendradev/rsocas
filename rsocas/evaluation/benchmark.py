@@ -15,6 +15,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent.parent / "lambda-rlm"))
 
+# Retrieval metrics come from lambda-rlm's benchmark module (added to sys.path
+# above) rather than being re-implemented here. The local _f1 below is a verbatim
+# copy of a set-based token F1 that turned out to have r=0.12 with actual
+# retrieval on this dataset; it is retained only so this gate can report the old
+# label alongside the corrected one.
+from benchmarks.benchmark import _item_recall, _needle_recall
+
 from rsocas.contracts.traces import TreeTrace
 from rsocas.contracts.evaluation import EvalResult, DisagreementSignal
 from rsocas.evaluation.info_theoretic import InformationTheoreticEval
@@ -40,12 +47,22 @@ class SampleResult:
     idx: int
     shifted: bool
     shift_type: str
-    f1: float
-    prediction: str
+    f1: float                      # set-based token F1 (the original label)
+    prediction: str                # stored in full — see gold below
     disagreement_magnitude: float
     eval_scores: dict[str, float]
     latency: float
     error: str | None = None
+    # Gold is stored so this run can be re-scored later without re-running
+    # inference. The previous artifact kept 200-char truncated predictions and
+    # no gold, which made its rho impossible to verify.
+    gold: str = ""
+    needle_recall: float | None = None
+    item_recall: float | None = None
+    retrieval: float | None = None  # the corrected failure label
+    k_star: int = 0                 # real plan, not inferred from event count
+    depth: int = 0
+    task_type: str = ""
 
 
 @dataclass(frozen=True)
@@ -228,19 +245,31 @@ def run_benchmark(
             prediction = completion.response.strip()
 
             events = collector.get_events()
-            plan_obj = type("Plan", (), {
-                "k_star": max(2, len(events) // 2),
-                "tau_star": min(len(sample.context), context_window),
-                "depth": 1 if len(events) > 1 else 0,
-                "cost_estimate": 0.0,
-            })()
+            # Use the plan lambda-RLM actually executed. This was previously
+            # fabricated from the event count (k_star = len(events)//2), which
+            # fed two of the three evaluators a tree shape that never existed.
+            real_plan = getattr(lrlm, "last_plan", None)
+            if real_plan is not None:
+                plan_obj = real_plan
+            else:
+                plan_obj = type("Plan", (), {
+                    "k_star": max(2, len(events) // 2),
+                    "tau_star": min(len(sample.context), context_window),
+                    "depth": 1 if len(events) > 1 else 0,
+                    "cost_estimate": 0.0,
+                })()
 
-            task_type = "QA"
+            _tt = getattr(lrlm, "last_task_type", None)
+            task_type = getattr(_tt, "value", "QA")
             trace = builder.build(events, plan_obj, task_type, prediction, t0, t0 + elapsed)
             evals = tuple(e.evaluate(trace) for e in evaluators)
             disagreement = compute_disagreement(evals, timestamp=time.time())
 
             f1 = _f1(prediction, sample.gold)
+            n_rec = _needle_recall(prediction, sample.gold)
+            i_rec = _item_recall(prediction, sample.gold)
+            # Prefer strict dated-needle recall; fall back to list-item recall.
+            retrieval = n_rec if n_rec is not None else i_rec
             eval_score_map = {e.signal_type: ev.score for e, ev in zip(evaluators, evals)}
 
             result = SampleResult(
@@ -248,13 +277,22 @@ def run_benchmark(
                 shifted=sample.shifted,
                 shift_type=sample.shift_type,
                 f1=f1,
-                prediction=prediction[:200],
+                prediction=prediction,
                 disagreement_magnitude=disagreement.magnitude,
                 eval_scores=eval_score_map,
                 latency=elapsed,
+                gold=sample.gold,
+                needle_recall=n_rec,
+                item_recall=i_rec,
+                retrieval=retrieval,
+                k_star=getattr(plan_obj, "k_star", 0),
+                depth=getattr(plan_obj, "depth", 0),
+                task_type=task_type,
             )
             scores_str = " ".join(f"{k[:4]}={v:.2f}" for k, v in eval_score_map.items())
-            print(f"F1={f1:.2f} disagree={disagreement.magnitude:.2f} [{scores_str}] ({elapsed:.1f}s)")
+            ret_s = f"{retrieval:.2f}" if retrieval is not None else "n/a"
+            print(f"F1={f1:.2f} retrieval={ret_s} k*={result.k_star} d={result.depth} "
+                  f"disagree={disagreement.magnitude:.2f} [{scores_str}] ({elapsed:.1f}s)")
 
         except Exception as e:
             elapsed = time.time() - t0
@@ -275,35 +313,72 @@ def run_benchmark(
         return CorrelationResult(0, 1, 0, 0, len(valid), 0, {}, results)
 
     from scipy.stats import spearmanr
-    disagreements = [r.disagreement_magnitude for r in valid]
-    failures = [1.0 - r.f1 for r in valid]
-
-    rho, p_val = spearmanr(disagreements, failures)
-
-    sorted_by_disagree = sorted(valid, key=lambda r: r.disagreement_magnitude, reverse=True)
     failure_threshold = 0.5
+    disagreements = [r.disagreement_magnitude for r in valid]
 
-    def prec_at_k(k: int) -> float:
-        top_k = sorted_by_disagree[:k]
-        if not top_k:
-            return 0.0
-        return sum(1 for r in top_k if r.f1 < failure_threshold) / len(top_k)
+    def analyse(label: str, quality: list[float | None]) -> dict:
+        """Correlate disagreement with failure under a given quality label.
 
-    p5 = prec_at_k(5)
-    p10 = prec_at_k(min(10, len(valid)))
+        The gate's original label was 1 - set_F1. Since set-F1 has r=0.12 with
+        actual retrieval on this dataset, the same disagreement signal is scored
+        against both labels here so the difference is visible rather than assumed.
+        """
+        pairs = [(d, q, r) for d, q, r in zip(disagreements, quality, valid) if q is not None]
+        if len(pairs) < 4:
+            return {"label": label, "n": len(pairs), "insufficient": True}
+        dis = [p[0] for p in pairs]
+        fail = [1.0 - p[1] for p in pairs]
+        rho_, p_ = spearmanr(dis, fail)
+        ranked = sorted(pairs, key=lambda t: t[0], reverse=True)
 
-    per_eval: dict[str, float] = {}
-    for eval_type in ["information_theoretic", "boundary", "goodhart_resistant"]:
-        scores = []
-        for r in valid:
-            if eval_type in r.eval_scores:
-                scores.append((1.0 - r.eval_scores[eval_type], 1.0 - r.f1))
-        if len(scores) >= 4:
-            inv_scores, fail_scores = zip(*scores)
-            eval_rho, _ = spearmanr(inv_scores, fail_scores)
-            per_eval[eval_type] = round(eval_rho, 4)
+        def prec_at_k(k: int) -> float:
+            top = ranked[:k]
+            return (sum(1 for _, q, _ in top if q < failure_threshold) / len(top)) if top else 0.0
 
-    n_failures = sum(1 for r in valid if r.f1 < failure_threshold)
+        per_ev: dict[str, float] = {}
+        for et in ["information_theoretic", "boundary", "goodhart_resistant"]:
+            sc = [(1.0 - r.eval_scores[et], 1.0 - q)
+                  for _, q, r in pairs if et in r.eval_scores]
+            if len(sc) >= 4:
+                a, b = zip(*sc)
+                er, _ = spearmanr(a, b)
+                per_ev[et] = None if er != er else round(float(er), 4)
+        return {
+            "label": label,
+            "n": len(pairs),
+            "spearman_rho": None if rho_ != rho_ else round(float(rho_), 4),
+            "spearman_p": None if p_ != p_ else round(float(p_), 6),
+            "precision_at_5": round(prec_at_k(5), 4),
+            "precision_at_10": round(prec_at_k(min(10, len(pairs))), 4),
+            "n_failures": sum(1 for _, q, _ in pairs if q < failure_threshold),
+            "per_evaluator": per_ev,
+        }
+
+    analysis = {
+        "set_f1": analyse("set_f1", [r.f1 for r in valid]),
+        "retrieval": analyse("retrieval", [r.retrieval for r in valid]),
+    }
+
+    print("\n  Correlation of disagreement with failure, by quality label:")
+    print(f"    {'label':10} {'n':>3} {'rho':>8} {'p':>9} {'P@5':>6} {'failures':>9}")
+    for k, a in analysis.items():
+        if a.get("insufficient"):
+            print(f"    {k:10} {a['n']:>3}   insufficient data")
+            continue
+        rr = "  nan" if a["spearman_rho"] is None else f"{a['spearman_rho']:8.4f}"
+        pp = "  nan" if a["spearman_p"] is None else f"{a['spearman_p']:9.6f}"
+        print(f"    {k:10} {a['n']:>3} {rr} {pp} {a['precision_at_5']:>6.2f} "
+              f"{a['n_failures']:>4}/{a['n']}")
+
+    # The gate is decided on the corrected label; set_f1 is reported for contrast.
+    primary = analysis["retrieval"] if not analysis["retrieval"].get("insufficient") \
+        else analysis["set_f1"]
+    rho = primary.get("spearman_rho") or 0.0
+    p_val = primary.get("spearman_p") if primary.get("spearman_p") is not None else 1.0
+    p5 = primary.get("precision_at_5", 0.0)
+    p10 = primary.get("precision_at_10", 0.0)
+    per_eval = {k: v for k, v in (primary.get("per_evaluator") or {}).items() if v is not None}
+    n_failures = primary.get("n_failures", 0)
 
     correlation = CorrelationResult(
         spearman_rho=round(rho, 4),
@@ -326,7 +401,8 @@ def run_benchmark(
         print(f"    {k}: rho={v:.4f}")
 
     gate_pass = correlation.spearman_rho >= 0.4 and correlation.spearman_p < 0.05
-    print(f"\n  {'GATE PASSED' if gate_pass else 'GATE FAILED'}: rho={'>=0.4' if correlation.spearman_rho >= 0.4 else '<0.4'}, p={'<0.05' if correlation.spearman_p < 0.05 else '>=0.05'}")
+    print(f"\n  (gate decided on the '{primary['label']}' label)")
+    print(f"  {'GATE PASSED' if gate_pass else 'GATE FAILED'}: rho={'>=0.4' if correlation.spearman_rho >= 0.4 else '<0.4'}, p={'<0.05' if correlation.spearman_p < 0.05 else '>=0.05'}")
 
     results_data = {
         "spearman_rho": correlation.spearman_rho,
@@ -337,12 +413,17 @@ def run_benchmark(
         "n_failures": correlation.n_failures,
         "per_evaluator": correlation.per_evaluator_correlation,
         "gate_passed": bool(gate_pass),
+        "primary_label": "retrieval",
+        "analysis_by_label": analysis,
         "samples": [
             {
                 "idx": r.idx, "shifted": r.shifted, "shift_type": r.shift_type,
-                "f1": r.f1, "disagreement": r.disagreement_magnitude,
+                "f1": r.f1, "needle_recall": r.needle_recall,
+                "item_recall": r.item_recall, "retrieval": r.retrieval,
+                "disagreement": r.disagreement_magnitude,
                 "eval_scores": r.eval_scores, "latency": r.latency,
-                "prediction": r.prediction, "error": r.error,
+                "k_star": r.k_star, "depth": r.depth, "task_type": r.task_type,
+                "prediction": r.prediction, "gold": r.gold, "error": r.error,
             }
             for r in results
         ],
