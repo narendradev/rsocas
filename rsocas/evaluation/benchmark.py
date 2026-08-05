@@ -86,6 +86,21 @@ def _normalize(text: str) -> str:
 
 
 def _f1(pred: str, gold: str) -> float:
+    """Set-based token F1 — RETAINED ONLY to report the historical label.
+
+    Do not use this to judge quality. Two independent defects:
+
+    * It divides a set numerator by a list denominator, so a repeated token pushes
+      precision below 1 even when the prediction IS the gold. Measured over the
+      100 S-NIAH samples, gold scored against itself averages 0.523 (min 0.341,
+      max 0.740) — the ceiling is data-dependent and never 1.0.
+    * It has r=0.121 with actual needle retrieval (n=28,
+      lambda-rlm/benchmark_results/main_n10_t10).
+
+    The Phase 0 gate defined failure as `_f1 < 0.5` against this, which labelled
+    11 perfectly-retrieved answers as failures and produced the withdrawn
+    rho=0.7254. Use _needle_recall / _item_recall instead.
+    """
     p_toks = _normalize(pred).split()
     g_toks = _normalize(gold).split()
     if not p_toks or not g_toks:
