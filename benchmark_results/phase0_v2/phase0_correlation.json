@@ -1,0 +1,13 @@
+{
+  "spearman_rho": 0.7254,
+  "spearman_p": 0.007588,
+  "precision_at_5": 0.8,
+  "precision_at_10": 0.6,
+  "n_samples": 12,
+  "n_failures": 6,
+  "per_evaluator": {
+    "information_theoretic": 0.265,
+    "boundary": -0.7413,
+    "goodhart_resistant": 0.8569
+  },
+  "gate_passed": 
